@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gemo_coding_ch/logic/exceptions/http_exceptions.dart';
 
-import 'data/github_repositories_provider.dart';
+import 'data/providers/github_repositories_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,13 +34,43 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: TextButton(
-          child: Text("fetch data"),
-          onPressed: () async {
-            await repositoriesProvider.fetchRepositoriesData();
-          },
-        ),
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * .4,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Center(
+              child: Column(
+                children: [
+                  Image.asset("assets/images/logo.png"),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "Github Most Stared Repositories Last Month",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -18,7 +18,6 @@ class RepositoriesProvider {
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<dynamic> responseReposList = jsonDecode(response.body)['items'];
-        print(responseReposList.length);
         pageNaumber++;
         for (var item in responseReposList) {
           _repos.add(Repository.fromJson(item));
