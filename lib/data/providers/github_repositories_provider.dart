@@ -21,7 +21,6 @@ class RepositoriesProvider {
         pageNaumber++;
         for (var item in responseReposList) {
           _repos.add(Repository.fromJson(item));
-          print(_repos.last.name);
         }
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
         throw HttpExceptions(
