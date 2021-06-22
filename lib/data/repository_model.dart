@@ -1,5 +1,6 @@
 class Repository {
-  String name, description, userName, userAvatarUrl;
+  String name, userName, userAvatarUrl;
+  String? description;
   int noOfStarts;
   Repository({
     required this.description,
@@ -11,7 +12,7 @@ class Repository {
   factory Repository.fromJson(Map<String, dynamic> json) {
     return Repository(
       description: json['description'],
-      name: json['jd_scripts'],
+      name: json['name'],
       userAvatarUrl: json['owner']['avatar_url'],
       userName: json['owner']['login'],
       noOfStarts: json['stargazers_count'],

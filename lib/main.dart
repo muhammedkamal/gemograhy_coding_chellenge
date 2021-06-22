@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import 'data/github_repositories_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,8 +28,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  RepositoriesProvider repositoriesProvider = RepositoriesProvider();
+  @override
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          child: Text("fetch data"),
+          onPressed: () async {
+            await repositoriesProvider.fetchRepositoriesData();
+          },
+        ),
+      ),
+    );
   }
 }
