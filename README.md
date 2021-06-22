@@ -1,16 +1,26 @@
 # gemo_coding_ch
 
-A new Flutter project.
+![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
 
-## Getting Started
+This project is a mobile coding chellange to gemography which you can find here https://github.com/gemography/mobile-coding-challenge
 
-This project is a starting point for a Flutter application.
+## Idea
+    The basic Idea of the Chellenge is to use Github api to fetch and display the most starred repositories for the last 30 days.
+### Bonus implemented 
+    User can keep scroll down and new results is being fetched (pagination).
 
-A few resources to get you started if this is your first Flutter project:
+## Flutter Packages Used
+    -http 
+        which used to fetch the data from api.
+    -intl 
+        which just used to format the date for data being fetched.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## How to run the project
+First as there is no release version of the project you need to run it on debug mode
+    - Clone The project code to your PC
+    - open the project using android Studio/Vs code or any other IDE
+    - open your android emulator, IOS simulator or you can test it with your physical device 
+    - go to lib/main.dart and run the code
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## demo
+![demo](/assets/images/demo.gif)
