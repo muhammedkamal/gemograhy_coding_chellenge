@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-import 'repository_model.dart';
+import '../models/repository_model.dart';
 
 class RepositoriesProvider {
   int pageNaumber = 1;
