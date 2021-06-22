@@ -26,14 +26,18 @@ class RepoTile extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                leading: FittedBox(
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(userAvatarUrl),
-                      ),
-                      Text(userName),
-                    ],
+                leading: SizedBox(
+                  height: 70,
+                  width: 70,
+                  child: FittedBox(
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(userAvatarUrl),
+                        ),
+                        Text(userName),
+                      ],
+                    ),
                   ),
                 ),
                 title: Text(repoName),
