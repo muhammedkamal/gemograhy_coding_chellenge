@@ -1,4 +1,4 @@
-# gemo_coding_ch
+# Gemography Coding Chellenge
 
 ![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
 
