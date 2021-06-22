@@ -13,10 +13,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   RepositoriesProvider repositoriesProvider = RepositoriesProvider();
   List<Repository> repos = [];
-  bool isLoading = true;
+  bool isLoading = false, isInitialized = false;
+
+  ScrollController _scrollController = new ScrollController();
   @override
   void didChangeDependencies() async {
-    if (isLoading) {
+    if (!isInitialized) {
       try {
         await repositoriesProvider.fetchRepositoriesData();
       } catch (e) {
@@ -24,9 +26,44 @@ class _HomeState extends State<Home> {
       }
       setState(() {
         repos = repositoriesProvider.repositories;
+        isInitialized = true;
       });
     }
     super.didChangeDependencies();
+  }
+
+  void _getMoreData() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+    }
+    try {
+      await repositoriesProvider.fetchRepositoriesData();
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      repos = repositoriesProvider.repositories;
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _getMoreData();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,28 +101,49 @@ class _HomeState extends State<Home> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (ctx, index) {
-                        return RepoTile(
-                          repoName: repos[index].name,
-                          repoDiscription: repos[index].description != null
-                              ? repos[index].description!
-                              : "No descripton",
-                          userName: repos[index].userName,
-                          userAvatarUrl: repos[index].userAvatarUrl,
-                          noOfStars: repos[index].noOfStarts.toString(),
-                        );
-                      },
-                      itemCount: repos.length,
-                    ),
-                  ),
+                  !isInitialized
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 100),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemBuilder: (ctx, index) {
+                              if (index == repos.length)
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                );
+                              return RepoTile(
+                                repoName: repos[index].name,
+                                repoDiscription:
+                                    repos[index].description != null
+                                        ? repos[index].description!
+                                        : "No descripton",
+                                userName: repos[index].userName,
+                                userAvatarUrl: repos[index].userAvatarUrl,
+                                noOfStars: repos[index].noOfStarts.toString(),
+                              );
+                            },
+                            itemCount: repos.length + 1,
+                            controller: _scrollController,
+                          ),
+                        ),
                 ],
               ),
             ),
           ),
         ],
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 }
