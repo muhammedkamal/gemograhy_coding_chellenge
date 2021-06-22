@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:gemo_coding_ch/logic/exceptions/http_exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -23,9 +24,21 @@ class RepositoriesProvider {
           _repos.add(Repository.fromJson(item));
           print(_repos.last.name);
         }
+      } else if (response.statusCode >= 400 && response.statusCode < 500) {
+        throw HttpExceptions(
+            message:
+                "We are facing some error please try again in few moments");
+      } else if (response.statusCode >= 500) {
+        throw HttpExceptions(
+            message:
+                "The Server are facing some error please try again in few moments");
       }
     } catch (e) {
-      print(e);
+      throw e;
     }
+  }
+
+  List<Repository> get repositories {
+    return _repos;
   }
 }
